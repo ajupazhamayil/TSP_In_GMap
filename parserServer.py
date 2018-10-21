@@ -1,21 +1,18 @@
 from flask import Flask, request, jsonify
 import json
-import cppyy
-cppyy.include("foo.h")
-cppyy.load_library("foo")
-from cppyy.gbl import Foo
-
+import subprocess as sp
 
 app = Flask(__name__)
 
 @app.route('/<uuid>', methods=['GET', 'POST'])
 def add_message(uuid):
     content = request.json
-    print content['mytext']
-    f=Foo()
-    f.bar()
+    sp.call("./a.out")
+    #print("Called the cpp function")
     with open('file.json', 'w') as f:
-        f.write(json.dumps(content)) 
+        for i in content['data']:
+            temp=str(i['s'])+' '+str(i['d'])+' '+str(i['w'])
+            f.write(temp)
     return jsonify({"uuid":uuid})
 
 if __name__ == '__main__':
