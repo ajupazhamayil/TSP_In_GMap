@@ -11,8 +11,8 @@ motivated by the intelligent behavior of honey bees. */
 #include <math.h>
 #include <time.h>
 #include<time.h>
-#include<fstream>
-#include<iostream>
+#include<unistd.h>
+
 
 /* Control Parameters of ABC algorithm*/
 #define NP 20 /* The number of colony size (employed bees+onlooker bees)*/
@@ -21,13 +21,13 @@ motivated by the intelligent behavior of honey bees. */
 #define maxCycle 2500 /*The number of cycles for foraging {a stopping criteria}*/
 
 /* Problem specific variables*/
-#define D 4 /*The number of parameters of the problem to be optimized*/
+#define D 20 /*The number of parameters of the problem to be optimized*/
 #define lb -100 /*lower bound of the parameters. */
 #define ub 100 /*upper bound of the parameters. lb and ub can be defined as arrays for the problems of which parameters have different bounds*/
 
+
 #define runtime 30  /*Algorithm can be run many times in order to see its robustness*/
 
-using namespace std;
 int cities[D][D];
 double Foods[FoodNumber][D]; /*Foods is the population of food sources. Each row of Foods matrix is a vector holding D parameters to be optimized. The number of rows of Foods matrix equals to the FoodNumber*/
 double Foods1[FoodNumber][D]; // For TSP
@@ -137,9 +137,9 @@ void SPV(int index)
 int CalculateFitness1(double sol[D])
 {
     int i,sum=0;
-    for(i=0;i<D;i++)
+    for(i=0;i<D-1;i++)
     {
-        sum+=cities[(int)sol[i]][(int)sol[i]];
+        sum+=cities[(int)sol[i]][(int)sol[i+1]];
     }
     sum+=cities[(int)sol[D-1]][(int)sol[0]];
     return sum;
@@ -371,43 +371,18 @@ srand(time(NULL));
 
 for(i=0; i<D; ++i)
       for(j=0; j<D; ++j)
-         cities[i][j] = 1; //no edge present
+         cities[i][j] = 1; 
 
-    ifstream inputfile;
-	inputfile.open("file.json");
-	//std::string line;
-	//getline(inputfile,line);
-	//stringstream toint(line);
-	int s,d,weight;
-	
-    for(int i=0;i<D;i++){
-		for(int j=0;j<D;j++){
-			cities[i][j]=0;
-		}
-	}
-	if(inputfile.is_open()){
-
-		while(!inputfile.eof()){
-				inputfile >> s >> d >> weight;
-				cities[s][d]=weight;
-				cities[d][s]=weight;
-				}
-	
-		
-	}
-	else{
-		cout << "Error opening file\n";
-	}
-	inputfile.close();
-    for(i=0;i<D;i++)
-    cities[i][i]=0;
-
-    for(int i=0;i<D;i++){
-        for(int j=0;j<D;j++){
-            cout << cities[i][j] << " ";
+for(i=0; i<D; ++i){
+    for(j=0; j<D; ++j) 
+        if(cities[i][j] == 1)
+        {
+            cities[i][j] = 2;//1+rand()%100;
+            cities[j][i] = 2;//cities[i][j];
         }
-        cout << "\n";
-    }
+}
+for(i=0;i<D;i++)
+    cities[i][i]=0;
 
 initial();
 MemorizeBestSource();
@@ -434,7 +409,8 @@ for(j=0;j<D;j++)
 		}
 		printf("%d",(int)GlobalParams[0]);
         printf("\n\n");
-		printf("No. of Clicks is %ld and time in sec is %lf",t,(float)t/CLOCKS_PER_SEC);
+		printf("No. of Clicks is %d and time in sec is %f",t,(float)t/CLOCKS_PER_SEC);
+        printf("\n");
 //printf("%d. run: %e \n",run+1,GlobalMin);
 //GlobalMins[run]=GlobalMin;
 //mean=mean+GlobalMin;
@@ -442,6 +418,7 @@ for(j=0;j<D;j++)
 //mean=mean/runtime;
 //printf("Means of %d runs: %e\n",runtime,mean);
 //getchar();
+//usleep(1000);
 }
 
 
