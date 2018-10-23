@@ -1,9 +1,3 @@
-/* ABC algorithm coded using C programming language */
-
-/* Artificial Bee Colony (ABC) is one of the most recently defined algorithms by Dervis Karaboga in 2005,
-motivated by the intelligent behavior of honey bees. */
-
-
 
 
 #include <stdio.h>
@@ -53,9 +47,7 @@ typedef double (*FunctionCallback)(double sol[D]);
 
 /*benchmark functions */
 double sphere(double sol[D]);
-double Rosenbrock(double sol[D]);
-double Griewank(double sol[D]);
-double Rastrigin(double sol[D]);
+
 
 /*Write your own objective function name instead of sphere*/
 FunctionCallback function = &sphere;
@@ -134,12 +126,13 @@ void SPV(int index)
     }
 }
 
+//changed sum calculation from i,i to i,i+1
 int CalculateFitness1(double sol[D])
 {
     int i,sum=0;
-    for(i=0;i<D;i++)
+    for(i=0;i<D-1;i++)
     {
-        sum+=cities[(int)sol[i]][(int)sol[i]];
+        sum+=cities[(int)sol[i]][(int)sol[i+1]];
     }
     sum+=cities[(int)sol[D-1]][(int)sol[0]];
     return sum;
@@ -151,7 +144,7 @@ void init(int index)
    int j;
    for (j=0;j<D;j++)
 		{
-        r = (   (double)rand() / ((double)(RAND_MAX)+(double)(1)) );
+        r = ((double)rand() / ((double)(RAND_MAX)+(double)(1)));
         Foods[index][j]=r*(ub-lb)+lb;
 		solution[j]=Foods[index][j];
 		}
@@ -422,26 +415,18 @@ for (iter=0;iter<maxCycle;iter++)
     }
 
     t=clock()-t;
-//for(j=0;j<D;j++)
-//		{
-//			printf("GlobalParam[%d]: %f\n",j+1,GlobalParams[j]);
-//		}
+
 
 printf("Path is : \n\n");
 for(j=0;j<D;j++)
 		{
 			printf("%d ",(int)GlobalParams[j]);
 		}
+		//GlobalParams is the shortest path array
 		printf("%d",(int)GlobalParams[0]);
         printf("\n\n");
-		printf("No. of Clicks is %ld and time in sec is %lf",t,(float)t/CLOCKS_PER_SEC);
-//printf("%d. run: %e \n",run+1,GlobalMin);
-//GlobalMins[run]=GlobalMin;
-//mean=mean+GlobalMin;
-//}
-//mean=mean/runtime;
-//printf("Means of %d runs: %e\n",runtime,mean);
-//getchar();
+		//printf("No. of Clicks is %ld and time in sec is %lf",t,(float)t/CLOCKS_PER_SEC);
+
 }
 
 
@@ -456,43 +441,4 @@ top=top+sol[j]*sol[j];
 return top;
 }
 
-double Rosenbrock(double sol[D])
-{
-int j;
-double top=0;
-for(j=0;j<D-1;j++)
-{
-top=top+100*pow((sol[j+1]-pow((sol[j]),(double)2)),(double)2)+pow((sol[j]-1),(double)2);
-}
-return top;
-}
-
- double Griewank(double sol[D])
- {
-	 int j;
-	 double top1,top2,top;
-	 top=0;
-	 top1=0;
-	 top2=1;
-	 for(j=0;j<D;j++)
-	 {
-		 top1=top1+pow((sol[j]),(double)2);
-		 top2=top2*cos((((sol[j])/sqrt((double)(j+1)))*M_PI)/180);
-
-	 }
-	 top=(1/(double)4000)*top1-top2+1;
-	 return top;
- }
-
- double Rastrigin(double sol[D])
- {
-	 int j;
-	 double top=0;
-
-	 for(j=0;j<D;j++)
-	 {
-		 top=top+(pow(sol[j],(double)2)-10*cos(2*M_PI*sol[j])+10);
-	 }
-	 return top;
- }
 

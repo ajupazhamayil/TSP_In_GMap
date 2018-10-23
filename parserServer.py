@@ -21,7 +21,7 @@ def json_parser(uuid):
     content = request.json
     num_of_points = content["num_points"]
     print num_of_points
-    replace_word("ABC_TSP.cpp","#define D 0","#define D "+str(num_of_points))
+    replace_word("ABC_TSP.cpp","#define D 4","#define D "+str(num_of_points))
     print "replaced #define"
     flag = False
     with open('file.json', 'w') as f:
@@ -37,7 +37,7 @@ def json_parser(uuid):
     sp.call(["g++","ABC_TSP.cpp"])
     sp.call("./a.out")
     print "completed code running"
-    replace_word("ABC_TSP.cpp","#define D "+str(num_of_points),"#define D 0")
+    replace_word("ABC_TSP.cpp","#define D "+str(num_of_points),"#define D 4")
     #print("Called the cpp function")
     return jsonify({"uuid":uuid})
 
