@@ -15,7 +15,7 @@
 #define maxCycle 2500 /*The number of cycles for foraging {a stopping criteria}*/
 
 /* Problem specific variables*/
-#define D 4 /*The number of parameters of the problem to be optimized*/
+#define D 3 /*The number of parameters of the problem to be optimized*/
 #define lb -100 /*lower bound of the parameters. */
 #define ub 100 /*upper bound of the parameters. lb and ub can be defined as arrays for the problems of which parameters have different bounds*/
 
@@ -343,6 +343,19 @@ if(trial[maxtrialindex]>=limit)
 }
 
 
+void writeFile(string result){
+	std::ofstream outputfile;
+	outputfile.open("fileout.json",std::ofstream::trunc);
+	if(outputfile.is_open())
+		outputfile << result;
+	else{
+		cout << "Error creating file\n";
+	}
+	outputfile.close();
+}
+
+
+
 /*Main program of the ABC algorithm*/
 int main()
 {
@@ -417,15 +430,20 @@ for (iter=0;iter<maxCycle;iter++)
     t=clock()-t;
 
 
+string result="";
 printf("Path is : \n\n");
 for(j=0;j<D;j++)
 		{
 			printf("%d ",(int)GlobalParams[j]);
+			result=result+to_string((int)GlobalParams[j])+" ";
 		}
 		//GlobalParams is the shortest path array
 		printf("%d",(int)GlobalParams[0]);
+		result=result+to_string((int)GlobalParams[0]);
         printf("\n\n");
-		//printf("No. of Clicks is %ld and time in sec is %lf",t,(float)t/CLOCKS_PER_SEC);
+	//cout<<result;
+	//printf("No. of Clicks is %ld and time in sec is %lf",t,(float)t/CLOCKS_PER_SEC);
+	writeFile(result);
 
 }
 

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import json
 import subprocess as sp
 import os
@@ -16,21 +16,42 @@ def replace_word(infile,old_word,new_word):
 
 app = Flask(__name__)
 
-@app.route('/<uuid>', methods=['GET', 'POST'])
-def json_parser(uuid):
+
+@app.route('/', strict_slashes=False)
+def index():
+    return render_template("index.html")
+
+
+
+@app.route('/solution', methods=['GET', 'POST'], strict_slashes=False)
+def json_parser():
+    mapToPoint={}
+    pointToMap = {}
     content = request.json
-    num_of_points = content["num_points"]
-    print num_of_points
+    num_of_points = content["size"]
+    print content
     replace_word("ABC_TSP.cpp","#define D 4","#define D "+str(num_of_points))
     print "replaced #define"
     flag = False
+
+
+    uniqValue=0
+    #make the map for points
+    for i in content['data']:
+	if (mapToPoint.get(str(i['s']), None)==None):
+            mapToPoint[str(i['s'])] = str(uniqValue)
+	    pointToMap[str(uniqValue)]=str(i['s'])
+	    uniqValue=uniqValue+1
+    print mapToPoint
+    print pointToMap
+
     with open('file.json', 'w') as f:
         for i in content['data']:
 	    temp = ""
 	    if flag==True:
 	    	temp=temp+"\n"
 	    flag = True
-            temp=temp+str(i['s'])+' '+str(i['d'])+' '+str(i['w'])
+            temp=temp+mapToPoint[str(i['s'])]+' '+mapToPoint[str(i['d'])]+' '+str(i['w'])
             f.write(temp)
 
 
@@ -39,7 +60,12 @@ def json_parser(uuid):
     print "completed code running"
     replace_word("ABC_TSP.cpp","#define D "+str(num_of_points),"#define D 4")
     #print("Called the cpp function")
-    return jsonify({"uuid":uuid})
+    with open('fileout.json', 'r') as f:
+        result = f.readline()
+	temp=""
+	for r in result.split(" "):
+	    temp=temp+str(pointToMap[r])+" "
+    return jsonify({"result":temp})
 
 if __name__ == '__main__':
     app.run(host= '127.0.0.1',port=5000,debug=True)
