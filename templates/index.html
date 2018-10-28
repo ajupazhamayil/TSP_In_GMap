@@ -130,7 +130,7 @@
             success: function (data) {
             	var temp=data;
             	 console.log("Result of backend: "+JSON.stringify(temp));
-            	 resultroute=JSON.parse(temp).route;
+            	 resultroute=temp.route;
             	 
             	 for(var k=0;k<directionsDisplay.length;k++)
             	 	if(directionsDisplay[k] != null) {
