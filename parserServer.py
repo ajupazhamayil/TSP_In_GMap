@@ -1,7 +1,11 @@
+
 from flask import Flask, request, jsonify, render_template
 import json
 import subprocess as sp
 import os
+import sys
+
+#PLZ REMEMBER change key and json parsing in the frontend side
 
 def replace_word(infile,old_word,new_word):
     if not os.path.isfile(infile):
@@ -23,7 +27,7 @@ def index():
 
 
 
-@app.route('/solution', methods=['GET', 'POST'], strict_slashes=False)
+@app.route('/route', methods=['GET', 'POST'], strict_slashes=False)
 def json_parser():
     mapToPoint={}
     pointToMap = {}
