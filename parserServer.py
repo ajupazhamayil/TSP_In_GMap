@@ -38,9 +38,9 @@ def json_parser():
     uniqValue=0
     #make the map for points
     for i in content['data']:
-	if (mapToPoint.get(str(i['s']), None)==None):
-            mapToPoint[str(i['s'])] = str(uniqValue)
-	    pointToMap[str(uniqValue)]=str(i['s'])
+	if (mapToPoint.get(str(i['S']), None)==None):
+            mapToPoint[str(i['S'])] = str(uniqValue)
+	    pointToMap[str(uniqValue)]=str(i['S'])
 	    uniqValue=uniqValue+1
     print mapToPoint
     print pointToMap
@@ -51,7 +51,7 @@ def json_parser():
 	    if flag==True:
 	    	temp=temp+"\n"
 	    flag = True
-            temp=temp+mapToPoint[str(i['s'])]+' '+mapToPoint[str(i['d'])]+' '+str(i['w'])
+            temp=temp+mapToPoint[str(i['S'])]+' '+mapToPoint[str(i['D'])]+' '+str(i['W'])
             f.write(temp)
 
 
@@ -62,10 +62,11 @@ def json_parser():
     #print("Called the cpp function")
     with open('fileout.json', 'r') as f:
         result = f.readline()
-	temp=""
+	temp=[]
 	for r in result.split(" "):
-	    temp=temp+str(pointToMap[r])+" "
-    return jsonify({"result":temp})
+	    t = pointToMap[r]
+	    temp.append(int(t))
+    return jsonify(route = temp)
 
 if __name__ == '__main__':
     app.run(host= '127.0.0.1',port=5000,debug=True)

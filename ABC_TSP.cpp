@@ -15,7 +15,7 @@
 #define maxCycle 2500 /*The number of cycles for foraging {a stopping criteria}*/
 
 /* Problem specific variables*/
-#define D 3 /*The number of parameters of the problem to be optimized*/
+#define D 4 /*The number of parameters of the problem to be optimized*/
 #define lb -100 /*lower bound of the parameters. */
 #define ub 100 /*upper bound of the parameters. lb and ub can be defined as arrays for the problems of which parameters have different bounds*/
 
