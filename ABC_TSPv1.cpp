@@ -22,7 +22,7 @@
 #define runtime 30  /*Algorithm can be run many times in order to see its robustness*/
 
 using namespace std;
-double cities[D][D];
+int cities[D][D];
 double Foods[FoodNumber][D]; /*Foods is the population of food sources. Each row of Foods matrix is a vector holding D parameters to be optimized. The number of rows of Foods matrix equals to the FoodNumber*/
 double Foods1[FoodNumber][D]; // For TSP
 double f[FoodNumber];  /*f is a vector holding objective function values associated with food sources */
@@ -127,10 +127,9 @@ void SPV(int index)
 }
 
 //changed sum calculation from i,i to i,i+1
-double CalculateFitness1(double sol[D])
+int CalculateFitness1(double sol[D])
 {
-    int i;
-    double sum=0;
+    int i,sum=0;
     for(i=0;i<D-1;i++)
     {
         sum+=cities[(int)sol[i]][(int)sol[i+1]];
@@ -385,8 +384,7 @@ for(i=0; i<D; ++i)
 	//std::string line;
 	//getline(inputfile,line);
 	//stringstream toint(line);
-	int s,d;
-	double weight;
+	int s,d,weight;
 	
     for(int i=0;i<D;i++){
 		for(int j=0;j<D;j++){
