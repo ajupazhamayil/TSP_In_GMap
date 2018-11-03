@@ -205,7 +205,7 @@
             	var q=i;
             	
             	$.ajax({
-                    url: 'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins='+lat+','+lng+'&destinations='+lat1+','+lng1+'&key=AIzaSyCq_NfdZscVJ8ZPtanPN0LOzJhlNDw6xkg',
+                    url: 'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins='+lat+','+lng+'&destinations='+lat1+','+lng1+'&key=YOURKEY',
                     ajaxI: i,
                     success: function(data) {
                        //console.log("-++--"+JSON.stringify(data));
@@ -347,7 +347,7 @@
 
   
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq_NfdZscVJ8ZPtanPN0LOzJhlNDw6xkg&callback=initMap"
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOURKEY=initMap"
     async defer></script>
   <!-- JQuery -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
