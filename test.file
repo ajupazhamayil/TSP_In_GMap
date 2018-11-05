@@ -23,6 +23,16 @@ FunctionCallback is a type, which declares function pointer which has return val
      Replace the current path in Foods1[i][] and update cost in fitness1[i]
    else 
      put trial[i] = trial[i]+1
+     
+     
+     
+     
+
+CalculateProbabilities
+  update the prob[FoodNumber] array with probability value for new fitness1[FoodNumber] array.
+   eqn for the same is (0.9*(fitness1[i]/maxfit))+0.1
+   maxfit is nothing but the minimum fitness value of the current fitness1[NF]
+   (i think it is the probability of getting the solution replaced)
     
     
   
