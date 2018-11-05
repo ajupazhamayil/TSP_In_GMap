@@ -1,1 +1,2 @@
-Created a test file that does nothing
+FunctionCallback function = &sphere; it declares that fucntion is a variable of type Functionclalback.
+FunctionCallback is a type, which declares function pointer which has return value of double and array[D] as parameter.
