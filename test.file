@@ -10,7 +10,19 @@ FunctionCallback is a type, which declares function pointer which has return val
  
  --- goes after storebestResult
  SendEmployedBees
-  select one solution among all the foodsources randomly
-  select one particular position(param2change) in the food source randomly
-   then solution[param2change]=Foods[i][param2change]+(Foods[i][param2change]-Foods[neighbour][param2change])*(r-0.5)*2;
+  #running foodNumber of times bcz foodnmbr=employeeBees
+  for all solutions i (FoodNumbers) Do,
+   select one solution among all the foodsources randomly
+   select one particular position(param2change) in the food source randomly
+   (Randomly selected solution must be different from the solution i)
+    then solution[param2change]=Foods[i][param2change]+(Foods[i][param2change]-Foods[neighbour][param2change])*(r-0.5)*2;
+    (where r is a random value)
+   Make solution1(descrete) array using SPV1 call out of the solution we made just now
+   find the fitness1 of the current solution
+   if current solution is better than old solution (Fitness1[i]):
+     Replace the current path in Foods1[i][] and update cost in fitness1[i]
+   else 
+     put trial[i] = trial[i]+1
+    
+    
   
