@@ -22,7 +22,7 @@ FunctionCallback is a type, which declares function pointer which has return val
    if current solution is better than old solution (Fitness1[i]):
      Replace the current path in Foods1[i][] and update cost in fitness1[i]
    else 
-     put trial[i] = trial[i]+1
+     put trial[i] = trial[i]+1 //Solution could not be improved for trial[i] times continuousuly
      
      
      
@@ -41,6 +41,21 @@ SendOnlookerBees
    while (t<foodNumber)
      find a random number r
      if r<prob[i]
-       randomly take a city and find a neighbor solution among all the foods available
+       randomly take a city and find a neighbor solution among all the foods available(Randomly selected solution must be different from the solution i)
+       t++
+       copy food[i][] to solution and make a random number
+       solution[param2change]=Foods[i][param2change]+(Foods[i][param2change]-Foods[neighbour][param2change])*(r-0.5)*2;
+       do SPV on solution such that it will update solution1 with descrete values
+       CalculateFitness1(solution1)
+       If current solution is better than old solution (Fitness1[i]):
+         Replace the current path in Foods1[i][] and update cost in fitness1[i]
+       else 
+         put trial[i] = trial[i]+1 //Solution could not be improved for trial[i] times continuousuly
+     
+ 
+ 
+ SendScoutBees
+   Find maximum trialled food source
+   Then do a init on that food source
        
        
