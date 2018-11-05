@@ -1,2 +1,16 @@
+--- goes before storebestResult
+
 FunctionCallback function = &sphere; it declares that fucntion is a variable of type Functionclalback.
 FunctionCallback is a type, which declares function pointer which has return value of double and array[D] as parameter.
+ 
+ This function is getting used for findting f[D]
+ This F[D] is used to find the fitness value for fitness[numbrOfFoods] usin function 'function'
+ 
+ 
+ 
+ --- goes after storebestResult
+ SendEmployedBees
+  select one solution among all the foodsources randomly
+  select one particular position(param2change) in the food source randomly
+   then solution[param2change]=Foods[i][param2change]+(Foods[i][param2change]-Foods[neighbour][param2change])*(r-0.5)*2;
+  
