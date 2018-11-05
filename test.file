@@ -36,3 +36,11 @@ CalculateProbabilities
     
     
   
+SendOnlookerBees
+   t,i=0
+   while (t<foodNumber)
+     find a random number r
+     if r<prob[i]
+       randomly take a city and find a neighbor solution among all the foods available
+       
+       
